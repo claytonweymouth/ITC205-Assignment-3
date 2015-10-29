@@ -147,12 +147,45 @@ public class TestBook {
 		assertFalse(testLoan == _loan);
 		assertTrue(testLoan == null);
 	}
-	/*
+	
 	@Test
 	public void testReturnBook() {
-		fail("Not yet implemented");
+		//Setup
+		_book = new Book(_title, _author, _callNumber, _bookId);
+		
+		//Execute
+		_book.borrow(_loan);
+		_book.returnBook(false);
+		
+		//Verify
+		assertTrue(_book.getLoan() == null);
+		assertTrue(_book.getState() == EBookState.AVAILABLE);
+	}
+	
+	@Test
+	public void testReturnBookDamaged() {
+		//Setup
+		_book = new Book(_title, _author, _callNumber, _bookId);
+		
+		//Execute
+		_book.borrow(_loan);
+		_book.returnBook(true);
+		
+		//Verify
+		assertTrue(_book.getLoan() == null);
+		assertTrue(_book.getState() == EBookState.DAMAGED);
 	}
 
+	@Test(expected=RuntimeException.class)
+	public void testReturnBookNotOnLoan() {
+		//Setup
+		_book = new Book(_title, _author, _callNumber, _bookId);
+		
+		//Execute
+		_book.returnBook(true);
+	}
+	
+	/*	
 	@Test
 	public void testLose() {
 		fail("Not yet implemented");
