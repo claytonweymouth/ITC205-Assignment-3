@@ -35,7 +35,7 @@ public class TestBook {
 		_callNumber = "Test Call Number";
 		_bookId = 42;
 		
-		_book = new Book(_title, _author, _callNumber, _bookId);
+		_book = new Book(_author, _title, _callNumber, _bookId);
 	}
 
 	@After
@@ -213,38 +213,42 @@ public class TestBook {
 	@Test(expected=RuntimeException.class)
 	public void testDisposeDisposed() {
 		_book.dispose();
-		_book.dispose();
+		_book.dispose(); // Not a bug, attempting to dispose an already disposed book.
 	}
 	
-	/*	
 	@Test
 	public void testGetState() {
-		fail("Not yet implemented");
+		//Execute
+		EBookState testState = _book.getState();
+		
+		//Verify
+		assertTrue(testState instanceof EBookState);
 	}
+
 
 	@Test
 	public void testGetAuthor() {
-		fail("Not yet implemented");
+		assertEquals(_book.getAuthor(), _author);
 	}
 
 	@Test
 	public void testGetTitle() {
-		fail("Not yet implemented");
+		assertEquals(_book.getTitle(), _title);
 	}
 
 	@Test
 	public void testGetCallNumber() {
-		fail("Not yet implemented");
+		assertEquals(_book.getCallNumber(), _callNumber);
 	}
 
 	@Test
 	public void testGetID() {
-		fail("Not yet implemented");
+		assertEquals(_book.getID(), _bookId);
 	}
 
 	@Test
 	public void testToString() {
-		fail("Not yet implemented");
+		assertTrue(_book.toString() instanceof String);
 	}
-	*/
+
 }
