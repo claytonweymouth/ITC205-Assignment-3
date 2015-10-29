@@ -97,8 +97,8 @@ public class TestBook {
 		_book.borrow(_loan);
 		
 		//Verify
-		assertTrue(_book.getState() == EBookState.ON_LOAN);
-		assertTrue(_book.getLoan() == _loan);
+		assertEquals(_book.getState(), EBookState.ON_LOAN);
+		assertEquals(_book.getLoan(), _loan);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -131,7 +131,7 @@ public class TestBook {
 		
 		//Verify
 		assertTrue(testLoan instanceof ILoan);
-		assertTrue(testLoan == _loan);
+		assertEquals(testLoan, _loan);
 	}
 	
 	@Test
@@ -145,7 +145,7 @@ public class TestBook {
 		//Verify
 		assertFalse(testLoan instanceof ILoan);
 		assertFalse(testLoan == _loan);
-		assertTrue(testLoan == null);
+		assertNull(testLoan);
 	}
 	
 	@Test
@@ -158,8 +158,8 @@ public class TestBook {
 		_book.returnBook(false);
 		
 		//Verify
-		assertTrue(_book.getLoan() == null);
-		assertTrue(_book.getState() == EBookState.AVAILABLE);
+		assertNull(_book.getLoan());
+		assertEquals(_book.getState(), EBookState.AVAILABLE);
 	}
 	
 	@Test
@@ -172,8 +172,8 @@ public class TestBook {
 		_book.returnBook(true);
 		
 		//Verify
-		assertTrue(_book.getLoan() == null);
-		assertTrue(_book.getState() == EBookState.DAMAGED);
+		assertNull(_book.getLoan());
+		assertEquals(_book.getState(), EBookState.DAMAGED);
 	}
 
 	@Test(expected=RuntimeException.class)
@@ -195,7 +195,7 @@ public class TestBook {
 		_book.lose();
 		
 		//Verify
-		assertTrue(_book.getState() == EBookState.LOST);
+		assertEquals(_book.getState(), EBookState.LOST);
 	}
 
 	@Test(expected=RuntimeException.class)
@@ -218,7 +218,7 @@ public class TestBook {
 		_book.repair();
 		
 		//Verify
-		assertTrue(_book.getState() == EBookState.AVAILABLE);
+		assertEquals(_book.getState(), EBookState.AVAILABLE);
 	}
 	
 	@Test(expected=RuntimeException.class)
