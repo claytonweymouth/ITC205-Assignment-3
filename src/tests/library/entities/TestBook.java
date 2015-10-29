@@ -34,6 +34,8 @@ public class TestBook {
 		_author = "Test Book Author";
 		_callNumber = "Test Call Number";
 		_bookId = 42;
+		
+		_book = new Book(_title, _author, _callNumber, _bookId);
 	}
 
 	@After
@@ -44,7 +46,6 @@ public class TestBook {
 
 	@Test
 	public void testCreateBook() {
-		_book = new Book(_title, _author, _callNumber, _bookId);		
 		assertTrue( _book instanceof Book );
 	}
 
@@ -90,9 +91,6 @@ public class TestBook {
 
 	@Test
 	public void testBorrow() {
-		//Setup
-		_book = new Book(_title, _author, _callNumber, _bookId);
-		
 		//Execute
 		_book.borrow(_loan);
 		
@@ -103,17 +101,12 @@ public class TestBook {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testBorrowBadParamLoanNull() {
-		//Setup
-		_book = new Book(_title, _author, _callNumber, _bookId);
-		
-		//Execute
 		_book.borrow(null);
 	}
 	
 	@Test(expected=RuntimeException.class)
 	public void testBorrowStateNotAvaliable() {
 		//Setup
-		_book = new Book(_title, _author, _callNumber, _bookId);
 		_book.dispose();
 		
 		//Execute
@@ -122,9 +115,6 @@ public class TestBook {
 	
 	@Test
 	public void testGetLoan() {
-		//Setup
-		_book = new Book(_title, _author, _callNumber, _bookId);
-		
 		//Execute
 		_book.borrow(_loan);
 		ILoan testLoan = _book.getLoan();
@@ -136,9 +126,6 @@ public class TestBook {
 	
 	@Test
 	public void testGetLoanWhenNotLoaned() {
-		//Setup
-		_book = new Book(_title, _author, _callNumber, _bookId);
-		
 		//Execute
 		ILoan testLoan = _book.getLoan();
 		
@@ -150,9 +137,6 @@ public class TestBook {
 	
 	@Test
 	public void testReturnBook() {
-		//Setup
-		_book = new Book(_title, _author, _callNumber, _bookId);
-		
 		//Execute
 		_book.borrow(_loan);
 		_book.returnBook(false);
@@ -164,9 +148,6 @@ public class TestBook {
 	
 	@Test
 	public void testReturnBookDamaged() {
-		//Setup
-		_book = new Book(_title, _author, _callNumber, _bookId);
-		
 		//Execute
 		_book.borrow(_loan);
 		_book.returnBook(true);
@@ -178,18 +159,11 @@ public class TestBook {
 
 	@Test(expected=RuntimeException.class)
 	public void testReturnBookNotOnLoan() {
-		//Setup
-		_book = new Book(_title, _author, _callNumber, _bookId);
-		
-		//Execute
 		_book.returnBook(true);
 	}
 	
 	@Test
-	public void testLose() {
-		//Setup
-		_book = new Book(_title, _author, _callNumber, _bookId);
-		
+	public void testLose() {		
 		//Execute
 		_book.borrow(_loan);
 		_book.lose();
@@ -200,18 +174,11 @@ public class TestBook {
 
 	@Test(expected=RuntimeException.class)
 	public void testLoseNotOnLoan() {
-		//Setup
-		_book = new Book(_title, _author, _callNumber, _bookId);
-		
-		//Execute
 		_book.lose();
 	}
 
 	@Test
 	public void testRepair() {
-		//Setup
-		_book = new Book(_title, _author, _callNumber, _bookId);
-		
 		//Execute
 		_book.borrow(_loan);
 		_book.returnBook(true);
@@ -223,19 +190,33 @@ public class TestBook {
 	
 	@Test(expected=RuntimeException.class)
 	public void testRepairNotDamaged() {
-		//Setup
-		_book = new Book(_title, _author, _callNumber, _bookId);
-		
-		//Execute
 		_book.repair();
 	}
 
-	/*	
 	@Test
 	public void testDispose() {
-		fail("Not yet implemented");
+		//Execute
+		_book.borrow(_loan);
+		_book.returnBook(true);
+		_book.dispose();
+		
+		//Verify
+		assertEquals(_book.getState(), EBookState.DISPOSED);
 	}
 
+	@Test(expected=RuntimeException.class)
+	public void testDisposeOnLoan() {
+		_book.borrow(_loan);
+		_book.dispose();
+	}
+
+	@Test(expected=RuntimeException.class)
+	public void testDisposeDisposed() {
+		_book.dispose();
+		_book.dispose();
+	}
+	
+	/*	
 	@Test
 	public void testGetState() {
 		fail("Not yet implemented");
