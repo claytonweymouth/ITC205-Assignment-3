@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import library.interfaces.entities.EBookState;
 import library.interfaces.entities.IBook;
 import library.interfaces.entities.ILoan;
 
@@ -17,16 +18,18 @@ import library.entities.Loan;
 
 public class TestBook {
 
-	IBook _book;
-	ILoan _loan;
+	private IBook _book;
+	private ILoan _loan;
 	
-	String _title;
-	String _author;
-	String _callNumber;
-	int _bookId;
+	private String _title;
+	private String _author;
+	private String _callNumber;
+	private int _bookId;
 	
 	@Before
 	public void setUp() throws Exception {
+		_loan = mock(ILoan.class);
+		
 		_title = "Test Book Title";
 		_author = "Test Book Author";
 		_callNumber = "Test Call Number";
@@ -87,7 +90,34 @@ public class TestBook {
 
 	@Test
 	public void testBorrow() {
-		fail("Not yet implemented");
+		//Setup
+		_book = new Book(_title, _author, _callNumber, _bookId);
+		
+		//Execute
+		_book.borrow(_loan);
+		
+		//Verify
+		assertTrue(_book.getState() == EBookState.ON_LOAN);
+		assertTrue(_book.getLoan() == _loan);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testBorrowBadParamLoanNull() {
+		//Setup
+		_book = new Book(_title, _author, _callNumber, _bookId);
+		
+		//Execute
+		_book.borrow(null);
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void testBorrowStateNotAvaliable() {
+		//Setup
+		_book = new Book(_title, _author, _callNumber, _bookId);
+		_book.dispose();
+		
+		//Execute
+		_book.borrow(_loan);
 	}
 	
 	/*
