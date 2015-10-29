@@ -1,5 +1,7 @@
 package tests.library.daos;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -50,7 +52,6 @@ public class TestBookMapDAO {
 		_dao = new BookMapDAO(null);
 	}
 		
-	// Not Working?
 	@Test
 	public void testAddBook() {
 		//Execute
@@ -72,25 +73,71 @@ public class TestBookMapDAO {
 		assertTrue(testBookTwo instanceof Book);
 		assertEquals(testBookOne.getID(), testBookTwo.getID());
 	}
-	/*
+
 	@Test
 	public void testListBooks() {
-		fail("Not yet implemented");
+		//Setup
+		IBook testBookOne = _dao.addBook(_author, _title, _callNumber);
+		IBook testBookTwo = _dao.addBook(_author, _title, _callNumber);
+		
+		//Execute
+		List<IBook> testBookList = _dao.listBooks();
+		
+		//Verify
+		assertTrue(testBookList instanceof List<?>);
+		assertTrue(testBookList.contains(testBookOne));
+		assertTrue(testBookList.contains(testBookTwo));
 	}
 
 	@Test
 	public void testFindBooksByAuthor() {
-		fail("Not yet implemented");
+		//Setup
+		IBook testBookOne = _dao.addBook(_author, _title, _callNumber);
+		IBook testBookTwo = _dao.addBook("Needle", _title, _callNumber);
+		
+		//Execute
+		List<IBook> testBookList = _dao.findBooksByAuthor("Needle");
+		
+		//Verify
+		assertTrue(testBookList instanceof List<?>);
+		assertTrue(testBookList.contains(testBookTwo));
 	}
-
+	
 	@Test
 	public void testFindBooksByTitle() {
-		fail("Not yet implemented");
+		//Setup
+		IBook testBookOne = _dao.addBook(_author, _title, _callNumber);
+		IBook testBookTwo = _dao.addBook(_author, "Needle", _callNumber);
+		
+		//Execute
+		List<IBook> testBookList = _dao.findBooksByTitle("Needle");
+		
+		//Verify
+		assertTrue(testBookList instanceof List<?>);
+		assertTrue(testBookList.contains(testBookTwo));
 	}
 
 	@Test
 	public void testFindBooksByAuthorTitle() {
-		fail("Not yet implemented");
+		//Setup
+		IBook testBookOne = _dao.addBook(_author, _title, _callNumber);
+		IBook testBookTwo = _dao.addBook("Needle", _title, _callNumber);
+		IBook testBookThree = _dao.addBook(_author, "Needle", _callNumber);
+		IBook testBookFour = _dao.addBook("Haystack", _title, _callNumber);
+		IBook testBookFive = _dao.addBook(_author, "Haystack", _callNumber);
+		IBook testBookSix = _dao.addBook("Needle", "Haystack", _callNumber);
+		
+		//Execute
+		List<IBook> testBookList = _dao.findBooksByAuthorTitle("Needle", "Haystack");
+		
+		//Verify
+		assertTrue(testBookList instanceof List<?>);
+		assertTrue(testBookList.contains(testBookSix));
+		assertFalse(testBookList.contains(testBookOne));
+		assertFalse(testBookList.contains(testBookTwo));
+		assertFalse(testBookList.contains(testBookThree));
+		assertFalse(testBookList.contains(testBookFour));
+		assertFalse(testBookList.contains(testBookFive));
 	}
-*/
+
 }
