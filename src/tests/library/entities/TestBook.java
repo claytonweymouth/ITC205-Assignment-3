@@ -185,12 +185,29 @@ public class TestBook {
 		_book.returnBook(true);
 	}
 	
-	/*	
 	@Test
 	public void testLose() {
-		fail("Not yet implemented");
+		//Setup
+		_book = new Book(_title, _author, _callNumber, _bookId);
+		
+		//Execute
+		_book.borrow(_loan);
+		_book.lose();
+		
+		//Verify
+		assertTrue(_book.getState() == EBookState.LOST);
 	}
 
+	@Test(expected=RuntimeException.class)
+	public void testLoseNotOnLoan() {
+		//Setup
+		_book = new Book(_title, _author, _callNumber, _bookId);
+		
+		//Execute
+		_book.lose();
+	}
+
+	/*	
 	@Test
 	public void testRepair() {
 		fail("Not yet implemented");
