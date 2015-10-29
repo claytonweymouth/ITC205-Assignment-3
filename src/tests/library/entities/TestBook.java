@@ -120,12 +120,34 @@ public class TestBook {
 		_book.borrow(_loan);
 	}
 	
-	/*
 	@Test
 	public void testGetLoan() {
-		fail("Not yet implemented");
+		//Setup
+		_book = new Book(_title, _author, _callNumber, _bookId);
+		
+		//Execute
+		_book.borrow(_loan);
+		ILoan testLoan = _book.getLoan();
+		
+		//Verify
+		assertTrue(testLoan instanceof ILoan);
+		assertTrue(testLoan == _loan);
 	}
-
+	
+	@Test
+	public void testGetLoanWhenNotLoaned() {
+		//Setup
+		_book = new Book(_title, _author, _callNumber, _bookId);
+		
+		//Execute
+		ILoan testLoan = _book.getLoan();
+		
+		//Verify
+		assertFalse(testLoan instanceof ILoan);
+		assertFalse(testLoan == _loan);
+		assertTrue(testLoan == null);
+	}
+	/*
 	@Test
 	public void testReturnBook() {
 		fail("Not yet implemented");
